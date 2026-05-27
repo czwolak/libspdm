@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2021-2022 DMTF. All rights reserved.
+ *  Copyright 2021-2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -110,6 +110,30 @@ bool libspdm_cryptest_main(void)
     }
     #endif /* LIBSPDM_SM2_DSA_SUPPORT */
 
+    #if LIBSPDM_ML_DSA_SUPPORT
+    status = libspdm_validate_crypt_x509("mldsa44", sizeof("mldsa44"));
+    if (!status) {
+        return status;
+    }
+
+    status = libspdm_validate_crypt_x509("mldsa65", sizeof("mldsa65"));
+    if (!status) {
+        return status;
+    }
+
+    status = libspdm_validate_crypt_x509("mldsa87", sizeof("mldsa87"));
+    if (!status) {
+        return status;
+    }
+    #endif /* LIBSPDM_ML_DSA_SUPPORT */
+
+    #if LIBSPDM_SLH_DSA_SUPPORT
+    status = libspdm_validate_crypt_x509("slh-dsa-sha2-128s", sizeof("slh-dsa-sha2-128s"));
+    if (!status) {
+        return status;
+    }
+    #endif /* LIBSPDM_SLH_DSA_SUPPORT */
+
     #if LIBSPDM_FFDHE_SUPPORT
     status = libspdm_validate_crypt_dh();
     if (!status) {
@@ -165,6 +189,11 @@ bool libspdm_cryptest_main(void)
     if (!status) {
         return status;
     }
+
+    status = libspdm_validate_crypt_mlkem_negative();
+    if (!status) {
+        return status;
+    }
     #endif /* LIBSPDM_ML_KEM_SUPPORT */
 
     #if LIBSPDM_ML_DSA_SUPPORT
@@ -172,10 +201,20 @@ bool libspdm_cryptest_main(void)
     if (!status) {
         return status;
     }
+
+    status = libspdm_validate_crypt_mldsa_2();
+    if (!status) {
+        return status;
+    }
     #endif /* LIBSPDM_ML_DSA_SUPPORT */
 
     #if LIBSPDM_SLH_DSA_SUPPORT
     status = libspdm_validate_crypt_slhdsa();
+    if (!status) {
+        return status;
+    }
+
+    status = libspdm_validate_crypt_slhdsa_2();
     if (!status) {
         return status;
     }

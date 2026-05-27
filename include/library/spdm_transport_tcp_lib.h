@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2025 DMTF. All rights reserved.
+ *  Copyright 2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -18,6 +18,9 @@
  * +-------+--------+---------------------------+------+--+------+---+--------+-----+
  *
  */
+
+#define LIBSPDM_TCP_TRANSPORT_HEADER_SIZE  (4 + 4 + 2 + 2)
+#define LIBSPDM_TCP_TRANSPORT_TAIL_SIZE    (16 + 3 + 31)
 
 /*
  * Encode an SPDM or APP message to a transport layer message.

@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2021-2022 DMTF. All rights reserved.
+ *  Copyright 2021-2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -23,7 +23,7 @@
 #include "hal/library/memlib.h"
 #include "library/malloclib.h"
 #include "hal/library/cryptlib.h"
-#include "spdm_crypt_ext_lib/cryptlib_ext.h"
+#include "hal/library/cryptlib_ext.h"
 
 bool libspdm_read_input_file(const char *file_name, void **file_data, size_t *file_size);
 
@@ -176,6 +176,15 @@ bool libspdm_validate_crypt_prng(void);
 bool libspdm_validate_crypt_mlkem(void);
 
 /**
+ * Validate Crypto MLKEM input validation paths.
+ *
+ * @retval  true  Validation succeeded.
+ * @retval  false  Validation failed.
+ *
+ **/
+bool libspdm_validate_crypt_mlkem_negative(void);
+
+/**
  * Validate Crypto MLDSA Interfaces.
  *
  * @retval  true   Validation succeeded.
@@ -184,11 +193,27 @@ bool libspdm_validate_crypt_mlkem(void);
 bool libspdm_validate_crypt_mldsa(void);
 
 /**
+ * Validate Crypto ML-DSA key Retrieving (from PEM & X509) & signature Interfaces.
+ *
+ * @retval  true   Validation succeeded.
+ * @retval  false  Validation failed.
+ **/
+bool libspdm_validate_crypt_mldsa_2(void);
+
+/**
  * Validate Crypto SLHDSA Interfaces.
  *
  * @retval  true   Validation succeeded.
  * @retval  false  Validation failed.
  **/
 bool libspdm_validate_crypt_slhdsa(void);
+
+/**
+ * Validate Crypto SLH-DSA key Retrieving (from PEM & X509) & signature Interfaces.
+ *
+ * @retval  true   Validation succeeded.
+ * @retval  false  Validation failed.
+ **/
+bool libspdm_validate_crypt_slhdsa_2(void);
 
 #endif
