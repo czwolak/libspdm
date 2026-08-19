@@ -29,6 +29,7 @@ libspdm_return_t libspdm_get_response_certificate(libspdm_context_t *spdm_contex
     uint32_t rsp_msg_header_size;
     size_t cert_chain_size;
     uint32_t max_cert_chain_block_size;
+    uint32_t max_response_size;
 
     spdm_request = request;
 
@@ -176,7 +177,18 @@ libspdm_return_t libspdm_get_response_certificate(libspdm_context_t *spdm_contex
     if (!libspdm_is_capabilities_flag_supported(spdm_context, false,
                                                 SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP,
                                                 SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP)) {
-        max_cert_chain_block_size = (uint32_t) (*response_size - rsp_msg_header_size);
+        max_response_size = (uint32_t)*response_size;
+        if (spdm_context->local_context.capability.sender_data_transfer_size != 0) {
+            max_response_size = LIBSPDM_MIN(
+                max_response_size,
+                spdm_context->local_context.capability.sender_data_transfer_size);
+        }
+        if (spdm_context->connection_info.capability.data_transfer_size != 0) {
+            max_response_size = LIBSPDM_MIN(
+                max_response_size,
+                spdm_context->connection_info.capability.data_transfer_size);
+        }
+        max_cert_chain_block_size = max_response_size - rsp_msg_header_size;
         if (!use_large_cert_chain){
             max_cert_chain_block_size = LIBSPDM_MIN(max_cert_chain_block_size, SPDM_MAX_CERTIFICATE_CHAIN_SIZE);
         }
